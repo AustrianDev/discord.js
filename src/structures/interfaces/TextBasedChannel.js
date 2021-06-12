@@ -70,7 +70,7 @@ class TextBasedChannel {
   /**
    * Options provided when sending or editing a message.
    * @typedef {BaseMessageOptions} MessageOptions
-   * @property {MessageEmbed|Object} [embed] An embed for the message
+   * @property {MessageEmbed[]|Object[]} [embeds] The embeds for the message
    * (see [here](https://discord.com/developers/docs/resources/channel#embed-object) for more details)
    * @property {ReplyOptions} [reply] The options for replying to a message
    */
@@ -102,7 +102,8 @@ class TextBasedChannel {
    * Options for splitting a message.
    * @typedef {Object} SplitOptions
    * @property {number} [maxLength=2000] Maximum character length per message piece
-   * @property {string} [char='\n'] Character to split the message with
+   * @property {string|string[]|RegExp|RegExp[]} [char='\n'] Character(s) or Regex(s) to split the message with,
+   * an array can be used to split multiple times
    * @property {string} [prepend=''] Text to prepend to every piece except the first
    * @property {string} [append=''] Text to append to every piece except the last
    */
@@ -172,9 +173,10 @@ class TextBasedChannel {
       apiMessage = options.resolveData();
     } else {
       apiMessage = APIMessage.create(this, options).resolveData();
-      if (Array.isArray(apiMessage.data.content)) {
-        return Promise.all(apiMessage.split().map(this.send.bind(this)));
-      }
+    }
+
+    if (Array.isArray(apiMessage.data.content)) {
+      return Promise.all(apiMessage.split().map(this.send.bind(this)));
     }
 
     const { data, files } = await apiMessage.resolveFiles();

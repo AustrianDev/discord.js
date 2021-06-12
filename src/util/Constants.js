@@ -136,11 +136,16 @@ function makeImageUrl(root, { format = 'webp', size } = {}) {
 
 /**
  * Options for Image URLs.
- * @typedef {Object} ImageURLOptions
- * @property {string} [format] One of `webp`, `png`, `jpg`, `jpeg`, `gif`. If no format is provided,
- * defaults to `webp`.
+ * @typedef {StaticImageURLOptions} ImageURLOptions
  * @property {boolean} [dynamic] If true, the format will dynamically change to `gif` for
- * animated avatars; the default is false.
+ * animated avatars; the default is false
+ */
+
+/**
+ * Options for static Image URLs.
+ * @typedef {Object} StaticImageURLOptions
+ * @property {string} [format] One of `webp`, `png`, `jpg`, `jpeg`, `gif`. If no format is provided,
+ * defaults to `webp`
  * @property {number} [size] One of `16`, `32`, `64`, `128`, `256`, `512`, `1024`, `2048`, `4096`
  */
 
@@ -203,23 +208,6 @@ exports.Status = {
   RESUMING: 8,
 };
 
-/**
- * The current status of a voice connection. Here are the available statuses:
- * * CONNECTED: 0
- * * CONNECTING: 1
- * * AUTHENTICATING: 2
- * * RECONNECTING: 3
- * * DISCONNECTED: 4
- * @typedef {number} VoiceStatus
- */
-exports.VoiceStatus = {
-  CONNECTED: 0,
-  CONNECTING: 1,
-  AUTHENTICATING: 2,
-  RECONNECTING: 3,
-  DISCONNECTED: 4,
-};
-
 exports.OPCodes = {
   DISPATCH: 0,
   HEARTBEAT: 1,
@@ -233,18 +221,6 @@ exports.OPCodes = {
   INVALID_SESSION: 9,
   HELLO: 10,
   HEARTBEAT_ACK: 11,
-};
-
-exports.VoiceOPCodes = {
-  IDENTIFY: 0,
-  SELECT_PROTOCOL: 1,
-  READY: 2,
-  HEARTBEAT: 3,
-  SESSION_DESCRIPTION: 4,
-  SPEAKING: 5,
-  HELLO: 8,
-  CLIENT_CONNECT: 12,
-  CLIENT_DISCONNECT: 13,
 };
 
 exports.Events = {
@@ -262,7 +238,6 @@ exports.Events = {
   GUILD_MEMBER_REMOVE: 'guildMemberRemove',
   GUILD_MEMBER_UPDATE: 'guildMemberUpdate',
   GUILD_MEMBER_AVAILABLE: 'guildMemberAvailable',
-  GUILD_MEMBER_SPEAKING: 'guildMemberSpeaking',
   GUILD_MEMBERS_CHUNK: 'guildMembersChunk',
   GUILD_INTEGRATIONS_UPDATE: 'guildIntegrationsUpdate',
   GUILD_ROLE_CREATE: 'roleCreate',
@@ -291,8 +266,6 @@ exports.Events = {
   PRESENCE_UPDATE: 'presenceUpdate',
   VOICE_SERVER_UPDATE: 'voiceServerUpdate',
   VOICE_STATE_UPDATE: 'voiceStateUpdate',
-  VOICE_BROADCAST_SUBSCRIBE: 'subscribe',
-  VOICE_BROADCAST_UNSUBSCRIBE: 'unsubscribe',
   TYPING_START: 'typingStart',
   WEBHOOKS_UPDATE: 'webhookUpdate',
   INTERACTION_CREATE: 'interaction',
@@ -622,6 +595,8 @@ exports.VerificationLevels = ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'VERY_HIGH'];
  * * MAXIMUM_CHANNELS
  * * MAXIMUM_ATTACHMENTS
  * * MAXIMUM_INVITES
+ * * MAXIMUM_ANIMATED_EMOJIS
+ * * MAXIMUM_SERVER_MEMBERS
  * * GUILD_ALREADY_HAS_TEMPLATE
  * * UNAUTHORIZED
  * * ACCOUNT_VERIFICATION_REQUIRED
@@ -691,6 +666,8 @@ exports.APIErrors = {
   MAXIMUM_CHANNELS: 30013,
   MAXIMUM_ATTACHMENTS: 30015,
   MAXIMUM_INVITES: 30016,
+  MAXIMUM_ANIMATED_EMOJIS: 30018,
+  MAXIMUM_SERVER_MEMBERS: 30019,
   GUILD_ALREADY_HAS_TEMPLATE: 30031,
   UNAUTHORIZED: 40001,
   ACCOUNT_VERIFICATION_REQUIRED: 40002,
@@ -862,6 +839,14 @@ exports.MessageComponentTypes = createEnum([null, 'ACTION_ROW', 'BUTTON']);
  * @typedef {string} MessageButtonStyle
  */
 exports.MessageButtonStyles = createEnum([null, 'PRIMARY', 'SECONDARY', 'SUCCESS', 'DANGER', 'LINK']);
+
+/**
+ * The required MFA level for a guild
+ * * NONE
+ * * ELEVATED
+ * @typedef {string} MFALevel
+ */
+exports.MFALevels = createEnum(['NONE', 'ELEVATED']);
 
 /**
  * NSFW level of a Guild

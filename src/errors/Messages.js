@@ -24,6 +24,7 @@ const Messages = {
   DISALLOWED_INTENTS: 'Privileged intent provided is not enabled or whitelisted.',
   SHARDING_NO_SHARDS: 'No shards have been spawned.',
   SHARDING_IN_PROCESS: 'Shards are still being spawned.',
+  SHARDING_INVALID_EVAL_BROADCAST: 'Script to evaluate must be a function',
   SHARDING_SHARD_NOT_FOUND: id => `Shard ${id} could not be found.`,
   SHARDING_ALREADY_SPAWNED: count => `Already spawned ${count} shards.`,
   SHARDING_PROCESS_EXISTS: id => `Shard ${id} already has an active process.`,
@@ -91,6 +92,7 @@ const Messages = {
   INVALID_ELEMENT: (type, name, elem) => `Supplied ${type} ${name} includes an invalid element: ${elem}`,
 
   WEBHOOK_MESSAGE: 'The message was not sent by a webhook.',
+  WEBHOOK_TOKEN_UNAVAILABLE: 'This action requires a webhook token, but none is available.',
   MESSAGE_REFERENCE_MISSING: 'The message does not reference another message',
 
   EMOJI_TYPE: 'Emoji must be a string or GuildEmoji/ReactionEmoji',
@@ -108,7 +110,8 @@ const Messages = {
   MEMBER_FETCH_NONCE_LENGTH: 'Nonce length must not exceed 32 characters.',
 
   GLOBAL_COMMAND_PERMISSIONS:
-    "Permissions for global commands may only be fetched or modified from a guild's application command manager.",
+    'Permissions for global commands may only be fetched or modified by providing a guildID' +
+    "or from a guild's application command manager.",
 
   INTERACTION_ALREADY_REPLIED: 'This interaction has already been deferred or replied to.',
 };
